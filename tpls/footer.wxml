@@ -1,0 +1,48 @@
+<!--底部导航栏-->
+
+<view class='navbarbottom'>
+	<view class='navbottom'>
+		<view class="navbottomson {{bottomTab==0 ? 'on' : ''}}" data-flag="{{tabflag}}" data-index="0" bindtap='navbarbottomtap1'>
+			<image src='../../images/222.png'></image>
+			<text>选项栏</text>
+		</view>
+		<view class="navbottomson {{bottomTab==1 ? 'on' : ''}}" data-flag="{{tabflag}}" data-index="1" bindtap='navbarbottomtap2'>
+			<image class='specialimg' src='../../images/call.png'></image>
+			<text class='specialtext'>呼叫服务员</text>
+		</view>
+		<view wx:if="{{!optionPubData.isNotCurrentPageRote}}" id='mycart' class="navbottomson {{bottomTab==2 ? 'on' : ''}}" data-flag="{{tabflag}}" data-index="2" bindtap='navbarbottomtap'>
+			<image src='../../images/111.png'></image>
+			<text>购物车</text>
+			<!--购物车商品数量-->
+			<view class="circle" hidden="{{tabflag}}" wx:if="{{clicknum>=0}}" style="right:60rpx;top:-20rpx">{{clicknum}}</view>
+		</view>
+		<view wx:if="{{optionPubData.isNotCurrentPageRote}}" class="navbottomson {{bottomTab==2 ? 'on' : ''}}" data-flag="{{tabflag}}" data-index="2" bindtap='navbarbottomtap'>
+	      <image src='../../images/correct.png'></image>
+	      <text>下一步</text>
+	      <view class="circle" hidden="{{tabflag}}"  style="right:80rpx;top:-20rpx">{{clicknum}}</view>
+	    </view>
+	</view>
+</view>
+<!--底部导航栏的遮罩层-->
+<view class='mask' wx:if="{{bottomTab!=-1||makeBox}}" bindtap='masktap'></view>
+<view class='bottomshowbox'>
+	<view class='bottomshow bottomshow1' animation="{{anima}}" wx:if="{{bottomTab==0}}">
+		<navigator url="../user/user">个人中心</navigator>
+		<navigator url="../cart/cart">购物车</navigator>
+		<navigator url="../order/order">我的订单</navigator>
+		<navigator url="../allorder/allorder">全部订单</navigator>
+		<navigator>商家详情</navigator>
+		<navigator url='../dining/dining'>点餐页面</navigator>
+	</view>
+	<view class='bottomshow bottomshow2'>
+		<view class='sector' animation="{{myani}}" wx:if="{{bottomTab==1}}">
+			<image class='image1' src='../../images/water.png'></image>
+			<image class='image2' src='../../images/rice.png'></image>
+			<image class='image3' src='../../images/pay.png'></image>
+			<image class='image4' src='../../images/other.png'></image>
+		</view>
+	</view>
+</view>
+<import src="../plugins/toast/toast.wxml" />
+<!-- is="toast" 匹配组件中的toast提示  如果用dialog的话这就是dialog -->
+<template is="toast" data="{{ ...$wux.toast }}" />

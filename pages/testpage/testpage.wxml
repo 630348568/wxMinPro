@@ -1,0 +1,4 @@
+<view>
+	测试模块
+</view>
+<button bindtap=''>微信支付</button>

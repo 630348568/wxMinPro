@@ -1,0 +1,103 @@
+ <!-- <swiper class="swiper" indicator-dots="true" autoplay="true" interval="5000" duration="1000">
+  <block wx:for="{{images}}" wx:for-index="index" wx:key="unique">
+    <swiper-item>
+                          图片通常只在水平或垂直方向是完整的，另一个方向将会发生截取
+      <image src="{{item.url}}" class="slide-image" mode="aspectFill" />
+    </swiper-item>
+  </block>
+</swiper> -->
+
+<view class="userbox">
+  <view class='userinfo'>
+    <image class='userimg' src='{{userInfoAvatar}}'></image>
+    账号管理
+  </view>
+  <view class='userinfo'>
+    余额
+    <text class='userright'>123456</text>
+  </view>
+</view> 
+
+<view class="userbox">
+  <view class='userinfo'>
+    待付款
+    <text class='userright'>没有待付款的订单</text>
+  </view>
+  <view class='userinfo'>
+    待评价
+    <text class='userright'>一项待评价</text>
+  </view>
+  <view class='userinfo'>
+    足迹
+    <text class='userright'>暂无足迹</text>
+  </view>
+  <view class='userinfo' bindtap='toticket'>
+    开票信息
+    <text class='userright'>已填写发票信息</text>
+  </view>
+  <view class='userinfo'>
+    会员信息
+    <text class='userright'>您已有0店会员</text>
+  </view>
+  <view class='userinfo'>
+    会员绑定
+    <text class='userright'>进入会员绑定</text>
+  </view>
+</view> 
+
+<view class="userbox">
+  <view class='userinfo'>
+    优惠券
+    <text class='userright'>3张可用优惠券</text>
+  </view>
+  <view class='userinfo'>
+    优惠信息
+    <text class='userright'>暂无优惠</text>
+  </view>
+  <view class='userinfo'>
+    联系我们
+    <text class='userright'>400-888-888</text>
+  </view>
+</view> 
+
+
+<!--底部导航栏-->
+<view class='navbarbottom'>
+  <view class='navbottom'>
+    <view class="navbottomson {{bottomTab==0 ? 'on' : ''}}" data-flag="{{tabflag}}" data-index="0" bindtap='navbarbottomtap1'>
+      <image src='../../images/222.png'></image>
+      <text>选项栏</text>
+    </view>
+    <view class="navbottomson {{bottomTab==1 ? 'on' : ''}}" data-flag="{{tabflag}}" data-index="1" bindtap='navbarbottomtap2'>
+      <image class='specialimg' src='../../images/call.png'></image>
+      <text class='specialtext'>呼叫服务员</text>
+    </view>
+    <view class="navbottomson {{bottomTab==2 ? 'on' : ''}}" data-flag="{{tabflag}}" data-index="2" bindtap='navbarbottomtap'>
+      <image src='../../images/correct.png'></image>
+      <text>下一步</text>
+      <!--购物车商品数量-->
+      <view class="circle" hidden="{{tabflag}}" wx:if="{{clicknum>=1}}" style="right:80rpx;top:-20rpx">{{clicknum}}</view>
+    </view>
+  </view>
+</view>
+<!--底部导航栏的遮罩层-->
+<view class='mask' wx:if="{{bottomTab!=-1}}" bindtap='masktap'></view>
+<view class='bottomshowbox'>
+  <view class='bottomshow bottomshow1' animation="{{anima}}" wx:if="{{bottomTab==0}}">
+    <navigator url="../user/user">个人中心</navigator>
+    <navigator url="../cart/cart">购物车</navigator>
+    <navigator url="../order/order">我的订单</navigator>
+    <navigator url="../allorder/allorder">全部订单</navigator>
+    <navigator>商家详情</navigator>
+    <navigator url='../index/index'>点餐页面</navigator>
+  </view>
+  <view class='bottomshow bottomshow2'>
+    <view class='sector' animation="{{myani}}" wx:if="{{bottomTab==1}}">
+      <image class='image1' src='../../images/water.png'></image>
+      <image class='image2' src='../../images/rice.png'></image>
+      <image class='image3' src='../../images/pay.png'></image>
+      <image class='image4' src='../../images/other.png'></image>
+    </view>
+  </view>
+  
+</view>

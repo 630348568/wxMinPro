@@ -1,0 +1,19 @@
+{
+  "pages":[
+
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/dining/dining",
+    "pages/cart/cart",
+    "pages/order/order",
+    "pages/user/user",
+    "pages/allorder/allorder",
+    "pages/ticket/ticket"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#393a3f",
+    "navigationBarTitleText": "stt的第一个微信小程序",
+    "navigationBarTextStyle":"white"
+  }
+}

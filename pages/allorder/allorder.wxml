@@ -1,0 +1,108 @@
+<!--待确认订单-->
+<view class="orderbox">
+  <view class="title">待确认订单</view>
+  <view class="foods">
+    <text class="foodname">咖喱鸡排饭</text>
+    <!-- <text class="foodnum">x{{item.num}}</text> -->
+    <button class='cartbtn subbtn' bindtap="subcartnum"  data-index="{{index}}">-</button>
+    <input class='cartbtn cartinp' value='1'></input>
+    <button class='cartbtn addbtn' bindtap="addcartnum" data-index="{{index}}">+</button>
+    <text class="foodprice">￥20</text>
+  </view>
+  <view class="foods">
+    <text class="foodname">一号菜</text>
+    <!-- <text class="foodnum">x{{item.num}}</text> -->
+    <button class='cartbtn subbtn' bindtap="subcartnum"  data-index="{{index}}">-</button>
+    <input class='cartbtn cartinp' value='1'></input>
+    <button class='cartbtn addbtn' bindtap="addcartnum" data-index="{{index}}">+</button>
+    <text class="foodprice">￥20</text>
+  </view>
+</view>
+
+<!--已下单未支付订单-->
+<view class="orderbox">
+  <view class="title title2">已下单未支付订单</view>
+  <view class="foods">
+    <text class="foodname">咖喱鸡排饭</text>
+    <text class="foodnum">x1</text> 
+    <text class="foodprice">￥20</text>
+  </view>
+  <view class="foods">
+    <text class="foodname">一号菜</text>
+    <text class="foodnum">x1</text> 
+    <text class="foodprice">￥20</text>
+  </view>
+  <view class="foods">
+    <text class="foodname">咖喱鸡排饭</text>
+    <text class="foodnum">x1</text> 
+    <text class="foodprice">￥20</text>
+  </view>
+  <view class="foods">
+    <text class="foodname">一号菜</text>
+    <text class="foodnum">x1</text> 
+    <text class="foodprice">￥20</text>
+  </view>
+</view>
+<!--总计-->
+<view class="orderbox">
+  <view class="title title2">总计</view>
+  <view class="foods">
+    <text class="foodname">已支付</text>
+    <text class="foodnum">x11</text> 
+    <text class="foodprice">￥2000</text>
+  </view>
+  <view class="foods">
+    <text class="foodname">未支付</text>
+    <text class="foodnum">x14</text> 
+    <text class="foodprice">￥3000</text>
+  </view>
+  <view class="foods">
+    <text class="foodname">总计</text>
+    <text class="foodnum">x25</text> 
+    <text class="foodprice">￥5000</text>
+  </view>
+</view>
+
+<!--底部导航栏-->
+<view class='navbarbottom'>
+  <view class='navbottom'>
+    <view class="navbottomson {{bottomTab==0 ? 'on' : ''}}" data-flag="{{tabflag}}" data-index="0" bindtap='navbarbottomtap1'>
+      <image src='../../images/222.png'></image>
+      <text>选项栏</text>
+    </view>
+    <view class="navbottomson {{bottomTab==1 ? 'on' : ''}}" data-flag="{{tabflag}}" data-index="1" bindtap='navbarbottomtap2'>
+      <image class='specialimg' src='../../images/call.png'></image>
+      <text class='specialtext'>呼叫服务员</text>
+    </view>
+    <view class="navbottomson {{bottomTab==2 ? 'on' : ''}}" data-flag="{{tabflag}}" data-index="2" bindtap='navbarbottomtap'>
+      <image src='../../images/correct.png'></image>
+      <text>下一步</text>
+      <!--购物车商品数量-->
+      <view class="circle" hidden="{{tabflag}}" wx:if="{{clicknum>=1}}" style="right:80rpx;top:-20rpx">{{clicknum}}</view>
+    </view>
+  </view>
+</view>
+<!--底部导航栏的遮罩层-->
+<view class='mask' wx:if="{{bottomTab!=-1}}" bindtap='masktap'></view>
+<view class='bottomshowbox'>
+  <view class='bottomshow bottomshow1' animation="{{anima}}" wx:if="{{bottomTab==0}}">
+    <navigator url="../user/user">个人中心</navigator>
+    <navigator url="../cart/cart">购物车</navigator>
+    <navigator url="../order/order">我的订单</navigator>
+    <navigator url="../allorder/allorder">全部订单</navigator>
+    <navigator>商家详情</navigator>
+    <navigator url='../index/index'>点餐页面</navigator>
+  </view>
+  <view class='bottomshow bottomshow2'>
+    <view class='sector' animation="{{myani}}" wx:if="{{bottomTab==1}}">
+      <image class='image1' src='../../images/water.png'></image>
+      <image class='image2' src='../../images/rice.png'></image>
+      <image class='image3' src='../../images/pay.png'></image>
+      <image class='image4' src='../../images/other.png'></image>
+    </view>
+  </view>
+  <view class='bottomshow bottomshow3' wx:if="{{bottomTab==2}}">
+    <view class="toOrder" bindtap='Toindex'>返回加菜</view>
+    <view class="toOrder">确认下单</view>
+  </view> 
+</view>

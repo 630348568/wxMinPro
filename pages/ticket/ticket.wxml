@@ -1,0 +1,136 @@
+<!--pages/ticket/ticket.wxml-->
+
+<view class="userbox">
+  <view class='userinfo' style='border:none;padding:0'>
+    <radio-group bindchange="radiochange">
+      <label>
+        <text class='userleft'>湖南首席传媒信息科技有限公司</text><radio value='1' checked='true'></radio>
+      </label>
+      <label>
+        <text class='userleft'>湖南首席传媒信息科技有限公司</text><radio value='2'></radio>
+      </label>
+    </radio-group>
+  </view>
+   <view class='userinfo' bindtap='addticket' style='text-align: center;color:#000'>
+    <image src='../../images/加号.png'></image>
+    添加新的开票信息
+  </view> 
+</view> 
+
+<view hidden='{{addflag}}' class="userbox" style='text-align:right'>
+  <view class='userinfo'>
+    <text class='userleft2'>单位名称</text>
+    <view class='userright2'>
+      <text>首席传媒信息有限公司首席传媒信息有限公司</text>
+    </view>
+  </view>
+  <view class='userinfo'>
+    <text class='userleft2'>开户行</text>
+    <view class='userright2'>
+      中国建设银行
+    </view>
+  </view>
+  <view class='userinfo'>
+    <text class='userleft2'>账号</text>
+    <view class='userright2'>
+      6222**********7883
+    </view>
+  </view>
+  <view class='userinfo'>
+    <text class='userleft2'>单位电话</text>
+    <view class='userright2'>
+      12345678910
+    </view>
+  </view>
+  <view class='userinfo'>
+    <text class='userleft2'>纳税人识别码</text>
+    <view class='userright2'>
+      888888888
+    </view>
+  </view>
+  <view class='userinfo'>
+    <text class='userleft2'>单位地址</text>
+    <view class='userright2'>
+      德思勤广场
+    </view>
+  </view>
+</view> 
+
+<view class="userbox" hidden='{{!addflag}}'>
+  <view class='userinfo'>
+    <text class='userleft'>单位名称</text>
+    <view class='userright'>
+      <input value='单位名称' class="{{isfocus&&index==1?'isfocus':''}}" bindfocus="inpfocus" bindblur="isblur" data-index='1' data-isfocus="{{isfocus}}"></input>
+    </view>
+  </view>
+  <view class='userinfo'>
+    <text class='userleft'>开户行</text>
+    <view class='userright'>
+      <input value='开户行' class="{{isfocus&&index==2?'isfocus':''}}" bindfocus="inpfocus" bindblur="isblur" data-index='2' data-isfocus="{{isfocus}}"></input>
+    </view>
+  </view>
+  <view class='userinfo'>
+    <text class='userleft'>账号</text>
+    <view class='userright'>
+      <input value='账号' class="{{isfocus&&index==3?'isfocus':''}}" bindfocus="inpfocus" bindblur="isblur" data-index='3' data-isfocus="{{isfocus}}"></input>
+    </view>
+  </view>
+  <view class='userinfo'>
+    <text class='userleft'>单位电话</text>
+    <view class='userright'>
+      <input value='单位电话' class="{{isfocus&&index==4?'isfocus':''}}" bindfocus="inpfocus" bindblur="isblur" data-index='4' data-isfocus="{{isfocus}}"></input>
+    </view>
+  </view>
+  <view class='userinfo'>
+    <text class='userleft'>纳税人识别码</text>
+    <view class='userright'>
+      <input value='纳税人识别码' class="{{isfocus&&index==5?'isfocus':''}}" bindfocus="inpfocus" bindblur="isblur" data-index='5' data-isfocus="{{isfocus}}"></input>
+    </view>
+  </view>
+  <view class='userinfo'>
+    <text class='userleft'>单位地址</text>
+    <view class='userright'>
+      <input value='单位地址' class="{{isfocus&&index==6?'isfocus':''}}" bindfocus="inpfocus" bindblur="isblur" data-index='6' data-isfocus="{{isfocus}}"></input>
+    </view>
+  </view>
+</view>
+<!--底部导航栏-->
+<view class='navbarbottom'>
+  <view class='navbottom'>
+    <view class="navbottomson {{bottomTab==0 ? 'on' : ''}}" data-flag="{{tabflag}}" data-index="0" bindtap='navbarbottomtap1'>
+      <image src='../../images/222.png'></image>
+      <text>选项栏</text>
+    </view>
+    <view class="navbottomson {{bottomTab==1 ? 'on' : ''}}" data-flag="{{tabflag}}" data-index="1" bindtap='navbarbottomtap2'>
+      <image class='specialimg' src='../../images/call.png'></image>
+      <text class='specialtext'>呼叫服务员</text>
+    </view>
+    <view class="navbottomson {{bottomTab==2 ? 'on' : ''}}" data-flag="{{tabflag}}" data-index="2" bindtap='navbarbottomtap'>
+      <image src='../../images/correct.png'></image>
+      <text>下一步</text>
+      <!--购物车商品数量-->
+      <view class="circle" hidden="{{tabflag}}" wx:if="{{clicknum>=1}}" style="right:80rpx;top:-20rpx">{{clicknum}}</view>
+    </view>
+  </view>
+</view>
+<!--底部导航栏的遮罩层-->
+<view class='mask' wx:if="{{bottomTab!=-1}}" bindtap='masktap'></view>
+<view class='bottomshowbox'>
+  <view class='bottomshow bottomshow1' animation="{{anima}}" wx:if="{{bottomTab==0}}">
+    <navigator url="../user/user">个人中心</navigator>
+    <navigator url="../cart/cart">购物车</navigator>
+    <navigator url="../order/order">我的订单</navigator>
+    <navigator url="../allorder/allorder">全部订单</navigator>
+    <navigator>商家详情</navigator>
+    <navigator url='../index/index'>点餐页面</navigator>
+  </view>
+  <view class='bottomshow bottomshow2'>
+    <view class='sector' animation="{{myani}}" wx:if="{{bottomTab==1}}">
+      <image class='image1' src='../../images/water.png'></image>
+      <image class='image2' src='../../images/rice.png'></image>
+      <image class='image3' src='../../images/pay.png'></image>
+      <image class='image4' src='../../images/other.png'></image>
+    </view>
+  </view>
+  
+</view>

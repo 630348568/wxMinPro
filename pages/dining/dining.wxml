@@ -1,0 +1,256 @@
+<!--dining.wxml-->
+<view class='dining_box'>
+	<!--导航条  start-->
+	<view class="goods_class_nav">
+		<view class="goods_class_static_box">
+			<view class='static_box class_all' wx:if="{{flag}}">
+				<view class="static_class_name {{allcurrent?'parentTypeActive':''}}" bindtap='ActiveTap'>
+					全部
+				</view>
+				<view class='goods_class_num'>{{clicknum}}</view>
+			</view>
+			<view class='static_box class_setmeal' wx:if="{{flag}}">
+				<view class="static_class_name {{allcurrent2?'parentTypeActive':''}}" bindtap='ActiveTap2'>套餐</view>
+				<view class='goods_class_num'>99</view>
+			</view>
+		</view>
+		<scroll-view scroll-x = "true" class='goods_class_change_box'>
+			<view class = "line_box">
+				<view wx:if="{{index%2 ==0}}" wx:for="{{platGoodsTypeList}}" data-the-plat-goods-type="{{item}}"  data-idx="{{index}}"  bindtap='navbarTap' class="goods_class_text_name {{currentTab==index||navindex==index ? 'active' : ''}}">
+					{{item.typeName}}
+					<view wx:if="{{item.typecartNum>0}}" class="circle itemCircle {{currentTab==index||navindex==index? 'itemCircleOn' : ''}}">
+						{{item.typecartNum}}
+					</view>
+				</view>
+			</view>
+			<view class = "line_box">
+				<view wx:if="{{index%2 !=0}}" wx:for="{{platGoodsTypeList}}" data-the-plat-goods-type="{{item}}" data-idx="{{index}}" bindtap='navbarTap' class="goods_class_text_name {{currentTab==index||navindex==index ? 'active' : ''}}">
+					{{item.typeName}}
+					<view wx:if="{{item.typecartNum>0}}" class="circle itemCircle {{currentTab==index||navindex==index? 'itemCircleOn' : ''}}">
+						{{item.typecartNum}}
+					</view>
+				</view>
+			</view>
+		</scroll-view>
+	</view>
+	<!--导航条  end-->
+
+	<!--所有分类  start-->
+	<scroll-view scroll-y scroll-with-animation="true" bindscroll="changeTop" scroll-into-view="{{toView}}" class="allfood">
+		<view wx:if="{{goodsInfoList.length==0}}">正在加载。。。</view>
+		<view wx:for="{{goodsInfoList}}">
+			<!--横向导航栏 start-->
+			<!--<view id='list-{{item.typeId}}' class='foodtypenav'>
+				<view class='foodtypenavText'>{{index}} | </view>
+				<block wx:for="{{item}}" wx:for-item = 'item_' wx:for-index = 'index_'>
+					<view class='foodtypenavText'>{{detail[0].goodsCategoryName}}</view>
+				</block>
+			</view>-->
+			<!--横向导航栏 end-->
+			<!--商品循环 start-->
+			<view class="foodBox">
+				<!-- <image wx:if="{{item.pictureAddress!=''}}" src="http://51emm.cc{{item.pictureAddress}}" bindtap="add" data-goodsinfoid="{{item.goodsInfoId}}"></image> -->
+				<image src="../../images/noGoodImage.png" bindtap="add" data-goodsinfoid="{{item.goodsInfoId}}"></image>
+				<text class='itemName'>{{item.dishesName}}</text>
+				<!--价格+详情 start-->
+				<view class="price">
+					<view class='itemPrice'>
+						<text>￥</text>
+						<text class='redPrice'>{{item.originalPrice}}</text>
+					</view>
+					/{{item.formName}}
+					<view class="details" bindtap="showdetails" data-goodsinfoid="{{item.goodsInfoId}}">详情</view>
+				</view>
+				<!--价格+详情 end-->
+				<!--是否新品 start-->
+				<view wx:if="{{item.isnew==true}}" class='isnew'>
+					<view>新品</view>
+				</view>
+				<!--是否新品 end-->
+				<view class="count">
+					<!--减号圆圈-->
+					<view wx:if="{{item.num>0}}" bindtap="sub" data-goodsinfoid="{{item.goodsInfoId}}" class='circle delCircle'>
+						-
+					</view>
+					<!--添加购物车小圆点动画-->
+					<view hidden="{{item.click}}" animation="{{animationData}}" data-index="{{index}}" class="circle anicircle"></view>
+				</view>
+				<!--商品数量-->
+				<view wx:if="{{item.num>0}}" class='itemNum'>{{item.num}}</view>
+			</view>
+			<!--商品循环 end-->
+		</view>
+		<view class="image" hidden="{{flag}}" bindtap="hidedetails">
+			<image src="{{image}}"></image>
+		</view>
+
+	</scroll-view>
+	<!--所有分类 end-->
+
+	<!--所有套餐 start-->
+	<scroll-view wx:if="{{!singleorSetmeal}}" scroll-y scroll-with-animation="true" scroll-into-view="{{toView}}" class="allfood">
+		<view wx:if="{{Setmeal.length==0}}">正在加载。。。</view>
+		<!-- <view wx:for="{{allfoods}}" wx:for-item="result" wx:key="unique"> -->
+		<!--横向导航栏 start-->
+		<!-- <view id='list-{{result.typeId}}' class='foodtypenav'>
+	      <view class='foodtypenavText'>{{result.typeName}} | </view>
+	      <view class='foodtypenavText'>{{result.goodsCategoryName}}</view>
+	    </view> -->
+		<!--横向导航栏 end-->
+		<!--商品循环 start-->
+		<view wx:for="{{Setmeal}}" class="foodBox" wx:key="unique">
+			<image wx:if="{{item.pictureAddress!=''}}" src="http://119.23.246.0{{item.pictureAddress}}" bindtap='showSetmeal' data-setmealid="{{item.setmealId}}"></image>
+			<image wx:if="{{item.pictureAddress==''}}" src="../../images/noGoodImage.png" bindtap='showSetmeal' data-setmealid="{{item.setmealId}}"></image>
+			<text class='itemName'>{{item.setmealName}}</text>
+			<!--价格+详情 start-->
+			<view class="price">
+				<view class='itemPrice'>
+					<text>￥</text>
+					<text class='redPrice'>{{item.nowPrice}}</text>
+				</view>
+				<!-- /{{item.formName}} -->
+				<view class="details" bindtap="showdetails" data-setmealid="{{item.setmealId}}">详情</view>
+			</view>
+			<!--价格+详情 end-->
+			<!--是否新品 start-->
+			<view wx:if="{{item.isnew==true}}" class='isnew'>
+				<view>新品</view>
+			</view>
+			<!--是否新品 end-->
+			<view class="count">
+				<!--减号圆圈-->
+				<view wx:if="{{item.number>0}}" bindtap="sub" data-setmealid="{{item.setmealId}}" class='circle delCircle'>
+					-
+				</view>
+				<!--添加购物车小圆点动画-->
+				<view hidden="{{item.click}}" animation="{{animationData}}" data-index="{{index}}" class="circle anicircle"></view>
+			</view>
+			<!--商品数量-->
+			<view wx:if="{{item.number>0}}" class='itemNum'>{{item.number}}</view>
+		</view>
+		<!--商品循环 end-->
+		<!-- </view> -->
+		<view class="image" hidden="{{flag}}" bindtap="hidedetails">
+			<image src="{{image}}"></image>
+		</view>
+
+	</scroll-view>
+	<!--所有套餐 end-->
+
+	<!--套餐详情  start-->
+	<view wx:if="{{showSetmealdetails}}">
+		<view class="Setmealdetails">
+			<view class="makeTitle">
+				请选择套餐内容
+				<view class="makeClose" bindtap='closeSetmealdetails'>X</view>
+			</view>
+			<!--固定菜展示   start-->
+			<view wx:for="{{Fixeddishes}}" wx:key="unique" wx:for-item="result">
+				<view class="fixedoroptional {{showfixed?'fixedActive':''}}" bindtap='showfixed'>
+					{{result.setmealtype}}
+				</view>
+				<view class='Setmealbigbox' wx:if="{{showfixed}}">
+					<view class="fixedoroptionalbox {{item.isPractice==1?'havepractice':''}}" bindtap='setmealmake' data-goodsinfoid='{{item.goodsInfoId}}' wx:for="{{result.foodslist}}" wx:key="unique">
+						{{item.dishesName}}
+						<view class="goodsQuantity {{item.isPractice==1?'goodsQuantityActive':''}}">{{item.goodsQuantity}}</view>
+					</view>
+				</view>
+			</view>
+			<!--固定菜展示   end-->
+			<!--可选菜展示   start-->
+			<view wx:for="{{Optionalfood}}" wx:key="unique" wx:for-item="result" wx:for-index="parentindex">
+				<view class='optional'>
+					<view class="fixedoroptional {{parentindex==optionalidx?'fixedActive':''}}" bindtap='showoptional' data-index='{{parentindex}}'>{{result.classifyName}} {{result.total}}选{{result.ruleValue}}</view>
+					<view wx:if="{{parentindex==optionalidx}}" class='Setmealbigbox' data-index='{{parentindex}}'>
+						<view class='fixedoroptionalbox' wx:for="{{result.foodslist}}" wx:key="unique">
+							{{item.dishesName}}
+						</view>
+					</view>
+				</view>
+			</view>
+			<!--可选菜展示   end-->
+			<button class='makeBtn setmealbtn' value="取消" bindtap='closeSetmealdetails'>取消</button>
+			<button class='makeBtn setmealbtn' value="确定">确定</button>
+		</view>
+
+	</view>
+	<!--套餐详情  end-->
+
+	<!--做法框  start-->
+	<view class='makeBox' wx:if="{{makeBox}}">
+		<view class='practice'>
+			<view class='makeTitle'>
+				请选择做法
+				<view class='makeClose' bindtap='makeClose'>X</view>
+			</view>
+			<!--主做法+详细做法  start-->
+			<view class='makearr' wx:for="{{makeArr}}" wx:for-index="parentindex" wx:key="unique">
+				<view class="makeText {{makecurrent==parentindex?'makeTextActive':''}}" bindtap='choose' data-index='{{parentindex}}' data-parentid='{{item.makeId}}' data-alreadychoose='{{item.alreadychoose}}' data-canchoosenum='{{item.ruleValue}}'>{{item.makeName}} {{item.total}}选{{item.ruleValue}} 已选{{item.alreadychoose}}</view>
+				<!--详细做法-->
+				<view class="makemap {{item.whetherchoose?'makemapActive':''}}" wx:if="{{makeindex==parentindex&&makecurrent==parentindex}}" wx:for="{{goodsMakeMaps2}}" data-parentindex='{{parentindex}}' data-whetherchoose='{{item.whetherchoose}}' data-index='{{index}}' bindtap='choosemake' wx:key="unique">
+					{{item.makemap}}
+				</view>
+			</view>
+			<!--主做法+详细做法  end-->
+		</view>
+		<button class='makeBtn' value="取消" bindtap='makeClose'>取消</button>
+		<button class='makeBtn' value="确认" bindtap='makeconfirm'>确认</button>
+	</view>
+	<!--做法选择错误提示框-->
+	<view class='makeerro' wx:if="{{makeerro}}">
+		<view class='makeerrobox'>
+			<view class='errotext'>选择做法错误</view>
+			<button class='makeBtn errobtn' value="确认" bindtap='erroclose'>确认</button>
+		</view>
+	</view>
+	<!--做法框   end-->
+
+	<!--提示商品有不同做法不能直接减少-->
+	<view class='reminding' wx:if="{{reminding}}">
+		<!-- <image src='../../images/error.png' class='remindingImg'></image> -->
+		<view class='remindingText'>该商品选有不同做法,请从购物车进行删除</view>
+	</view>
+
+	<!--底部导航栏 start-->
+	<view class='navbarbottom'>
+		<view class='navbottom'>
+			<view class="navbottomson {{bottomTab==0 ? 'on' : ''}}" data-flag="{{tabflag}}" data-index="0" bindtap='navbarbottomtap1'>
+				<image src='../../images/optionbar.png'></image>
+				<text>选项栏</text>
+			</view>
+			<view class="navbottomson {{bottomTab==1 ? 'on' : ''}}" data-flag="{{tabflag}}" data-index="1" bindtap='navbarbottomtap2'>
+				<image class='specialimg' src='../../images/call1.png'></image>
+				<text class='specialtext'>呼叫服务员</text>
+			</view>
+			<view id='mycart' class="navbottomson {{bottomTab==2 ? 'on' : ''}}" data-flag="{{tabflag}}" data-index="2" bindtap='navbarbottomtap'>
+				<image src='../../images/shopcar.png'></image>
+				<text>购物车</text>
+				<!--购物车商品数量-->
+				<view class="itemNum cartnum" hidden="{{tabflag}}" wx:if="{{clicknum>=0}}" style="right:60rpx;top:0rpx">{{clicknum}}</view>
+			</view>
+		</view>
+	</view>
+	<!--底部导航栏  end-->
+
+	<view class='mask' wx:if="{{bottomTab!=-1||makeBox||showSetmealdetails||reminding}}" bindtap='masktap'></view>
+	<!--底部导航栏的遮罩层  start-->
+	<view class='bottomshowbox'>
+		<view class='bottomshow bottomshow1' animation="{{anima}}" wx:if="{{bottomTab==0}}">
+			<navigator open-type='redirect' url="../user/user" bindtap='masktap'>个人中心</navigator>
+			<navigator open-type='redirect' url="../cart/cart" bindtap='masktap'>购物车</navigator>
+			<navigator open-type='redirect' url="../order/order" bindtap='masktap'>我的订单</navigator>
+			<navigator open-type='redirect' url="../allorder/allorder" bindtap='masktap'>全部订单</navigator>
+			<navigator open-type='redirect'>商家详情</navigator>
+			<navigator open-type='redirect' url='../index/index' bindtap='masktap'>点餐页面</navigator>
+		</view>
+		<view class='bottomshow bottomshow2'>
+			<view class='sector' animation="{{myani}}" wx:if="{{bottomTab==1}}">
+				<image class='image1' src='../../images/water.png'></image>
+				<image class='image2' src='../../images/rice.png'></image>
+				<image class='image3' src='../../images/pay.png'></image>
+				<image class='image4' src='../../images/other.png'></image>
+			</view>
+		</view>
+	</view>
+	<!--底部导航栏的遮罩层  end-->
+</view>

@@ -1,0 +1,28 @@
+<import src="../../plugins/toast/toast.wxml"/>
+
+<!-- is="toast" 匹配组件中的toast提示  如果用dialog的话这就是dialog -->
+<template is="toast" data="{{ ...$wux.toast }}"/>
+<!--index.wxml-->
+<view class="container">
+  <view  bindtap="bindViewTap" class="userinfo">
+    <!--<image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>-->
+    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    
+  </view>
+  <view class="usermotto">
+    <text class="user-motto">{{motto}}</text>
+  </view>
+</view>
+<view class="wellcome" >
+	<image src="../../images/bg/home_bg.jpg" style="width:100%; height:100%;" alt=""/>
+	<p class="time_down"><span>{{ timeSecond }}S</span>后进行页面跳转</p>
+	<form action="/customer/home/loginwarrant/in" method="post" name="myForm" id="myform">
+		<input type="hidden" ng-model="postData.storeId" id="storeId" name="storeId" />
+		<input type="hidden" ng-model="postData.seatId" id="seatId" name="seatId"/>
+		<input type="hidden" ng-model="postData.totalsingle" id="totalsingle" name="totalsingle" />
+		<input type="hidden" ng-model="postData.lat" id="lat" name="lat"/>
+		<input type="hidden" ng-model="postData.lng" id="lng" name="lng"/>
+		<input type="submit" id="submit_form" style="display:none"/>
+	</form>
+</view>
+<button bindtap = "tstFn">test</button>

@@ -1,0 +1,5 @@
+<!--pages/ad/ad.wxml-->
+<view class='cover'>
+  <text>{{time}}秒后自动跳转~</text>
+  <image src='../../images/home_bg.jpg'></image>
+</view>

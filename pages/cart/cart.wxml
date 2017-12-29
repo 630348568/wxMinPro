@@ -1,0 +1,17 @@
+<image class="userimg" src='{{userInfoAvatar}}'></image>
+<view class='nullcart' wx:if="{{cart.length==0}}">您的购物车为空，快去购物吧</view>
+<view class='nullcart' wx:if="{{cart.length>0}}">您的购物车</view>
+<view wx:if="{{cart.length>0}}" wx:for="{{cart}}" wx:key="unique">
+  <view class='cartview'>
+    <text class='carttext'>
+        {{item.name}}
+    </text>
+    <text class='cartprice'>￥{{item.price}}</text>
+    <!-- <button class='cartbtn subbtn' bindtap="subcartnum"  data-index="{{index}}">-</button> -->
+    <image class='subimage' src="../../images/del.png" bindtap="subcartnum" data-index="{{index}}"></image>
+    <input class='cartbtn cartinp' bindblur="numinput" data-index="{{index}}" value='{{item.num}}'></input>
+    <image class='addimage' src="../../images/add.png" bindtap="addcartnum" data-index="{{index}}"></image>
+    <!-- <button class='cartbtn addbtn' bindtap="addcartnum" data-index="{{index}}">+</button> -->
+  </view>
+</view>
+<include src="../../tpls/footer.wxml"/>
